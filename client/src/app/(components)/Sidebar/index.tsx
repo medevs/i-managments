@@ -1,7 +1,7 @@
 "use client";
 
-// import { useAppDispatch, useAppSelector } from "@/app/redux";
-// import { setIsSidebarCollapsed } from "@/state";
+import { useAppDispatch, useAppSelector } from "@/app/redux";
+import { setIsSidebarCollapsed } from "@/state";
 import {
   Archive,
   CircleDollarSign,
@@ -60,9 +60,14 @@ const SidebarLink = ({
 };
 
 const Sidebar = () => {
+  const dispatch = useAppDispatch();
+  const isSidebarCollapsed = useAppSelector(
+    (state) => state.global.isSidebarCollapsed
+  );
 
-  const isSidebarCollapsed = false;
-  const toggleSidebar = () => {};
+  const toggleSidebar = () => {
+    dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
+  };
 
   const sidebarClassNames = `fixed flex flex-col ${
     isSidebarCollapsed ? "w-0 md:w-16" : "w-72 md:w-64"
@@ -88,7 +93,7 @@ const Sidebar = () => {
             isSidebarCollapsed ? "hidden" : "block"
           } font-extrabold text-2xl`}
         >
-          EDSTOCK
+          MEDSTOCK
         </h1>
 
         <button
@@ -126,15 +131,15 @@ const Sidebar = () => {
           isCollapsed={isSidebarCollapsed}
         />
         <SidebarLink
-          href="/settings"
-          icon={SlidersHorizontal}
-          label="Settings"
-          isCollapsed={isSidebarCollapsed}
-        />
-        <SidebarLink
           href="/expenses"
           icon={CircleDollarSign}
           label="Expenses"
+          isCollapsed={isSidebarCollapsed}
+        />
+        <SidebarLink
+          href="/settings"
+          icon={SlidersHorizontal}
+          label="Settings"
           isCollapsed={isSidebarCollapsed}
         />
       </div>
